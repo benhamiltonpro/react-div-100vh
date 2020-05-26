@@ -13,7 +13,7 @@ function replaceRvhWithPx(propertyStringValue, windowHeight) {
   const rvhRegex = /(\d+(\.\d*)?)rvh(?!\w)/g;
   return propertyStringValue.replace(
     rvhRegex,
-    (_, rvh) => `${(windowHeight * parseFloat(rvh)) / 100}px`
+    (_, rvh) => `${Math.floor(windowHeight * parseFloat(rvh)) / 100}px`
   );
 }
 
@@ -35,7 +35,7 @@ function convertStyle(givenStyle, windowHeight) {
   const usedStyle = givenStyle === undefined ? defaultStyle : givenStyle;
 
   const convertedStyle = {};
-  Object.keys(usedStyle).forEach(key => {
+  Object.keys(usedStyle).forEach((key) => {
     // if a value contains no rvh unit, it's used as is, otherwise converted
     // to px; 1rvh = (window.innerHeight / 100)px
     convertedStyle[key] =
